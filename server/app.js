@@ -4,11 +4,13 @@ const express = require('express'),
     dotenv = require('dotenv'),
     cors = require('cors'),
     mongoose = require('mongoose'),
-    Todo = require('./models/todo');
+    Todo = require('./models/todo'),
+    indexRoutes = require('./routes/index');
 
 dotenv.config();
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
 app.use(cors());
 
 mongoose.connect(process.env.MONGO_URI, {
@@ -21,9 +23,11 @@ mongoose.connect(process.env.MONGO_URI, {
     else console.log("Database connection established");
 })
 
-Todo.create({
-    description: 'hey hey'
-})
+app.get('/todos', indexRoutes);
+app.post('/todos', indexRoutes);
+app.get('/todos/:id', indexRoutes);
+app.put('/todos/:id', indexRoutes);
+app.delete('/todos/:id', indexRoutes);
 
 app.get("/data", (req,res)=>{
     res.json({
