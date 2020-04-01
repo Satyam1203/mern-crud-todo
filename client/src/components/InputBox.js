@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import TodoTable from './TodoTable';
 
 class InputBox extends React.Component{
     state={
@@ -13,10 +14,10 @@ class InputBox extends React.Component{
         console.log(this.state.todo);
         axios.post(`/todos`, { description: this.state.todo })
         .then(res => {
-            this.setState({allTodos : res.data})
-            console.log(this.state.allTodos)
+            console.log("New added")
         })
         .catch(e=>console.error(e));
+        window.location = '/';
     }
     render(){
         return (
@@ -28,6 +29,7 @@ class InputBox extends React.Component{
                     <button className="btn btn-success" onClick={this.addTodoHandler}>Add</button>
                 </div>
                 </div>
+                <TodoTable/>
             </div>
         );
     }

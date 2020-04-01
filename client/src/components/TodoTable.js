@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import EditTodo from './EditTodo';
 
 export default class TodoTable extends React.Component{
     state={
@@ -13,14 +14,6 @@ export default class TodoTable extends React.Component{
         })
         .catch(e=>console.error(e));
     }
-    // updateHandler = (id)=>{
-    //     axios.put(`/todos/${id}`)
-    //     .then(res => {
-    //         this.setState({todos : res.data})
-    //         console.log(this.state.todos)
-    //     })
-    //     .catch(e=>console.error(e));
-    // }
     deleteHandler = (id)=>{
         axios.delete(`/todos/${id}`)
         .then(res => {
@@ -33,11 +26,11 @@ export default class TodoTable extends React.Component{
         return (
             <>
             {/* {this.state.todos} */}
-            <table className="table table-hover mt-5">
+            <table className="table table-hover mt-5 table-bordered">
                 <thead className="thead-dark">
                 <tr>
                     <th>Description</th>
-                    <th>Added on</th>
+                    {/* <th>Added on</th> */}
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -47,8 +40,10 @@ export default class TodoTable extends React.Component{
                         return (
                             <tr key={todo._id}>
                                 <td>{todo.description}</td>
-                                <td>{todo.date}, {todo.time}</td>
-                                <td><button className="btn btn-secondary" onClick={() => this.updateHandler(todo._id)}>Edit</button></td>
+                                {/* <td>{todo.date}, {todo.time}</td> */}
+                                <td>
+                                    <EditTodo id={todo._id} desc={todo.description}/>    
+                                </td>
                                 <td><button className="btn btn-danger" onClick={() => this.deleteHandler(todo._id)}>Delete</button></td>
                             </tr>
                         )
