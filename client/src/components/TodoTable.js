@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import EditTodo from './EditTodo';
-
 export default class TodoTable extends React.Component{
     state={
         todos: []
@@ -10,7 +9,7 @@ export default class TodoTable extends React.Component{
         axios.get(`/todos`)
         .then(res => {
             this.setState({todos : res.data})
-            console.log(this.state.todos)
+            console.log(res)
         })
         .catch(e=>console.error(e));
     }
@@ -30,7 +29,7 @@ export default class TodoTable extends React.Component{
                 <thead className="thead-dark">
                 <tr>
                     <th>Description</th>
-                    {/* <th>Added on</th> */}
+                    <th>Added on</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -40,7 +39,7 @@ export default class TodoTable extends React.Component{
                         return (
                             <tr key={todo._id}>
                                 <td>{todo.description}</td>
-                                {/* <td>{todo.date}, {todo.time}</td> */}
+                                <td>{(new Date(todo.created_at).toLocaleDateString()).toString()}, {(new Date(todo.created_at).toLocaleTimeString()).toString()}</td>
                                 <td>
                                     <EditTodo id={todo._id} desc={todo.description}/>    
                                 </td>

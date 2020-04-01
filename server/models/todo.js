@@ -3,9 +3,10 @@ const mongoose = require('mongoose'),
 
 const todoSchema = new mongoose.Schema({
     description: String,
-    date: {type: String, default: ((new Date()).toString()).slice(04,15) },
-    time: {type: String, default: ((new Date()).toString()).slice(16,24) }
-})
+}
+,{
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+  });
 
 const Todo = mongoose.model('Todo', todoSchema);
 
