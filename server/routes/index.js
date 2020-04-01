@@ -1,5 +1,6 @@
 const routes = require('express').Router(),
-    Todo = require('../models/todo');
+    Todo = require('../models/todo'),
+    mongoose = require('mongoose');
 
 // Show All Todos
 routes.get("/todos",(req,res)=>{
@@ -19,6 +20,7 @@ routes.get("/todos",(req,res)=>{
 // Create new todo
 routes.post("/todos", (req,res)=>{
     let description = req.body.description;
+    console.log(description);
     try {
         Todo.create({
             description
@@ -76,9 +78,10 @@ routes.put("/todos/:id", (req,res)=>{
 // Delete a todo
 routes.delete("/todos/:id", (req,res)=>{
     let id = req.params.id;
+    console.log(id);
     try {
         Todo.findOneAndDelete({
-            _id:id
+            _id: mongoose.Types.ObjectId(`${id}`)
         }, 
         (err,todo)=>{
             if(err) console.log("Error "+err);
